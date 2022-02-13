@@ -1,5 +1,4 @@
 /* 
-	SELECT Statement.
 	Course: The Complete SQL Bootcamp 2022: Go from Zero to Hero.
 	Data: Import 'resources/dvdrental.tar' into Postgres.
 */
