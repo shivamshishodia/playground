@@ -1,4 +1,4 @@
-public class SimpleArrays {
+public class SimpleArray {
     
     /**
      * In Java, all arrays are dynamically allocated and each has an index beginning from 0.
