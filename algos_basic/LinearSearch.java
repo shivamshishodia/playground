@@ -11,7 +11,7 @@ public class LinearSearch {
 
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         int arr[] = {1, 5, 3, 2, 6, 7, 9, 8};
         int element = 6;
