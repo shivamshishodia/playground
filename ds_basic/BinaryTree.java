@@ -81,11 +81,59 @@ public class BinaryTree {
         }
     }
 
+    int height(Node root) {
+
+        // Height is empty tree is -1.
+        if(root == null) {
+            return -1;
+        }
+
+        return Math.max(height(root.left) + 1 , height(root.right) + 1);
+    }
+
+    void insert(Node ele) {
+
+        // Insert the element at root if the tree is empty.
+        if (root == null) {
+            root = ele;
+            return;
+        }
+
+        // Do lateral traversal and insert at the first empty node.
+        Queue<Node> Q = new LinkedList<Node>();
+        Q.add(root);
+
+        while (!Q.isEmpty()) {
+            
+            Node discover = Q.peek();
+            Q.remove();
+
+            // If left is empty, insert the node otherwise keep traversing.
+            if (discover.left == null) {
+                discover.left = ele;
+                break;
+            } else {
+                Q.add(discover.left);
+            }
+
+            // If right is empty, insert the node otherwise keep traversing.
+            if (discover.right == null) {
+                discover.right = ele;
+                break;
+            } else {
+                Q.add(discover.right);
+            }
+
+        }
+
+    }
+
     // Wrappers
     void inorder() { inorder(root); }
     void preorder() { preorder(root); }
     void postorder() { postorder(root); }
     void levelOrder() { levelOrder(root); }
+    int height() { return height(root); }
 
     // Driver function.
     public static void main(String[] args) {
@@ -115,6 +163,16 @@ public class BinaryTree {
         System.out.print("Postorder \t: ");
         tree.postorder();
         System.out.println("");
+
+        System.out.print("Level Order \t: ");
+        tree.levelOrder();
+        System.out.println("");
+
+        System.out.println("Height \t: " + tree.height());
+
+        Node ele = new Node(6);
+        System.out.println("Inserting node...");
+        tree.insert(ele);
 
         System.out.print("Level Order \t: ");
         tree.levelOrder();
