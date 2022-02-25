@@ -1,4 +1,7 @@
-/** Class to store node data. */
+import java.util.LinkedList;
+import java.util.Queue;
+
+// Class to store node data.
 class Node {
 
     int key;
@@ -13,15 +16,15 @@ class Node {
 
 public class BinaryTree {
 
-    /** Declare the root. */
+    // Declare the root.
     Node root;
 
     BinaryTree() {
-        /** Root is set to null. */
+        // Root is set to null.
         root = null;
     }
 
-    /** Inorder traversal. */
+    // Inorder traversal.
     void inorder(Node root) {
         if (root == null) {
             return;
@@ -31,7 +34,7 @@ public class BinaryTree {
         inorder(root.right);
     }
 
-    /** Preorder traversal. */
+    // Preorder traversal.
     void preorder(Node root) {
         if (root == null) {
             return;
@@ -41,7 +44,7 @@ public class BinaryTree {
         preorder(root.right);
     }
 
-    /** Postorder traversal. */
+    // Postorder traversal.
     void postorder(Node root) {
         if (root == null) {
             return;
@@ -51,20 +54,49 @@ public class BinaryTree {
         System.out.print(root.key + " ");
     }
 
-    /** Wrappers */
+    // Level order traversals.
+    void levelOrder(Node root) {
+
+        if (root == null) {
+            return;
+        }
+
+        // Create a FIFO queue to store discovered nodes.
+        Queue<Node> Q = new LinkedList<Node>();
+        Q.add(root);
+
+        while (!Q.isEmpty()) {
+            // Remove the discovered nodes.
+            Node ele = Q.peek();
+            Q.remove();
+
+            // Add thier children.
+            System.out.print(ele.key + " ");
+            if (ele.left != null) {
+                Q.add(ele.left);
+            }
+            if (ele.right != null) {
+                Q.add(ele.right);
+            }
+        }
+    }
+
+    // Wrappers
     void inorder() { inorder(root); }
     void preorder() { preorder(root); }
     void postorder() { postorder(root); }
+    void levelOrder() { levelOrder(root); }
 
-    /** Driver function. */
+    // Driver function.
     public static void main(String[] args) {
-        
-        /** 
+
+        /**
          * Construct the binary tree.
-         *      1
-         *    2   3
-         *   4 5
+         *        1
+         *     2     3
+         *   4   5
          */
+
         BinaryTree tree = new BinaryTree();
         tree.root = new Node(1);
         tree.root.left = new Node(2);
@@ -79,11 +111,15 @@ public class BinaryTree {
         System.out.print("Preorder \t: ");
         tree.preorder();
         System.out.println("");
-        
+
         System.out.print("Postorder \t: ");
         tree.postorder();
         System.out.println("");
-        
+
+        System.out.print("Level Order \t: ");
+        tree.levelOrder();
+        System.out.println("");
+
     }
 
 }
