@@ -3,7 +3,6 @@ import java.util.Queue;
 
 // Class to store node data.
 class Node {
-
     int key;
     Node left, right;
 
@@ -11,11 +10,9 @@ class Node {
         this.key = key;
         this.left = this.right = null;
     }
-
 }
 
 public class BinaryTree {
-
     // Declare the root.
     Node root;
 
@@ -56,7 +53,6 @@ public class BinaryTree {
 
     // Level order traversals.
     void levelOrder(Node root) {
-
         if (root == null) {
             return;
         }
@@ -82,17 +78,14 @@ public class BinaryTree {
     }
 
     int height(Node root) {
-
         // Height is empty tree is -1.
         if(root == null) {
             return -1;
         }
-
         return Math.max(height(root.left) + 1 , height(root.right) + 1);
     }
 
     void insert(Node ele) {
-
         // Insert the element at root if the tree is empty.
         if (root == null) {
             root = ele;
@@ -104,7 +97,6 @@ public class BinaryTree {
         Q.add(root);
 
         while (!Q.isEmpty()) {
-            
             Node discover = Q.peek();
             Q.remove();
 
@@ -123,9 +115,85 @@ public class BinaryTree {
             } else {
                 Q.add(discover.right);
             }
+        }
+    }
 
+    void deleteDeepest(int element) {
+        Queue<Node> Q = new LinkedList<Node>();
+        Q.add(root);
+
+        // Traverse at level order.
+        Node dequeuedNode = null;
+        while (!Q.isEmpty()) {
+            dequeuedNode = Q.peek();
+            Q.remove();
+            // Check if left exists and is the node to be deleted.
+            if (dequeuedNode.left != null) {
+                if (dequeuedNode.left.key == element) {
+                    dequeuedNode.left = null;
+                    return;
+                } else {
+                    Q.add(dequeuedNode.left);
+                }
+            }
+            // Check if right exists and is the node to be deleted.
+            if (dequeuedNode.right != null) {
+                if (dequeuedNode.right.key == element) {
+                    dequeuedNode.right = null;
+                    return;
+                } else {
+                    Q.add(dequeuedNode.right);
+                }
+            }
+        }
+    }
+
+    void delete(int deleteElement) {
+        // Return if the tree is empty.
+        if (root == null) {
+            return;
         }
 
+        // If the tree has only root.
+        if (root.left == null && root.right == null) {
+            if (root.key == deleteElement) {
+                root = null;
+                return;
+            }
+            return;
+        }
+
+        // Level order traversal to find the key node and 
+        // deepest node (dequeued last from FIFO queue).
+        Queue<Node> Q = new LinkedList<Node>();
+        Q.add(root);
+        
+        Node keyNode = null, lastDequeuedNode = null;
+
+        while (!Q.isEmpty()) {
+            lastDequeuedNode = Q.peek();
+            Q.remove();
+            // Find the key node to be deleted.
+            if (lastDequeuedNode.key == deleteElement) {
+                keyNode = lastDequeuedNode;
+            }
+            // Traverse further for deepest node (dequeued last from FIFO queue).
+            if (lastDequeuedNode.left != null) {
+                Q.add(lastDequeuedNode.left);
+            } 
+            if (lastDequeuedNode.right != null) {
+                Q.add(lastDequeuedNode.right);
+            }
+        }
+
+        // Check if the node to be deleted was found.
+        if (keyNode != null) {
+            int value = lastDequeuedNode.key;
+            // Now delete the deepest value.
+            deleteDeepest(lastDequeuedNode.key);
+            // Key node value replaced with deepest node.
+            keyNode.key = value;
+        }
     }
 
     // Wrappers
@@ -142,9 +210,8 @@ public class BinaryTree {
          * Construct the binary tree.
          *        1
          *     2     3
-         *   4   5
+         *    4 5
          */
-
         BinaryTree tree = new BinaryTree();
         tree.root = new Node(1);
         tree.root.left = new Node(2);
@@ -170,6 +237,12 @@ public class BinaryTree {
 
         System.out.println("Height \t: " + tree.height());
 
+        /**
+         * Insert in binary tree.
+         *        1
+         *     2     3
+         *    4 5   6
+         */
         Node ele = new Node(6);
         System.out.println("Inserting node...");
         tree.insert(ele);
@@ -178,6 +251,19 @@ public class BinaryTree {
         tree.levelOrder();
         System.out.println("");
 
-    }
+        /**
+         * Delete 1 in binary tree.
+         *        6
+         *     2     3
+         *    4 5
+         */
+        int deleteEle = 1;
+        System.out.println("Deleting node...");
+        tree.delete(deleteEle);
 
+        System.out.print("Level Order \t: ");
+        tree.levelOrder();
+        System.out.println("");
+
+    }
 }
