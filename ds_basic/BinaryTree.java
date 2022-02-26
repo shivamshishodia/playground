@@ -2,11 +2,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 // Class to store node data.
-class Node {
+class BTNode {
     int key;
-    Node left, right;
+    BTNode left, right;
 
-    Node(int key) {
+    BTNode(int key) {
         this.key = key;
         this.left = this.right = null;
     }
@@ -14,7 +14,7 @@ class Node {
 
 public class BinaryTree {
     // Declare the root.
-    Node root;
+    BTNode root;
 
     BinaryTree() {
         // Root is set to null.
@@ -22,7 +22,7 @@ public class BinaryTree {
     }
 
     // Inorder traversal.
-    void inorder(Node root) {
+    void inorder(BTNode root) {
         if (root == null) {
             return;
         }
@@ -32,7 +32,7 @@ public class BinaryTree {
     }
 
     // Preorder traversal.
-    void preorder(Node root) {
+    void preorder(BTNode root) {
         if (root == null) {
             return;
         }
@@ -42,7 +42,7 @@ public class BinaryTree {
     }
 
     // Postorder traversal.
-    void postorder(Node root) {
+    void postorder(BTNode root) {
         if (root == null) {
             return;
         }
@@ -52,18 +52,18 @@ public class BinaryTree {
     }
 
     // Level order traversals.
-    void levelOrder(Node root) {
+    void levelOrder(BTNode root) {
         if (root == null) {
             return;
         }
 
         // Create a FIFO queue to store discovered nodes.
-        Queue<Node> Q = new LinkedList<Node>();
+        Queue<BTNode> Q = new LinkedList<BTNode>();
         Q.add(root);
 
         while (!Q.isEmpty()) {
             // Remove the discovered nodes.
-            Node ele = Q.peek();
+            BTNode ele = Q.peek();
             Q.remove();
 
             // Add thier children.
@@ -77,7 +77,7 @@ public class BinaryTree {
         }
     }
 
-    int height(Node root) {
+    int height(BTNode root) {
         // Height is empty tree is -1.
         if(root == null) {
             return -1;
@@ -85,7 +85,7 @@ public class BinaryTree {
         return Math.max(height(root.left) + 1 , height(root.right) + 1);
     }
 
-    void insert(Node ele) {
+    void insert(BTNode ele) {
         // Insert the element at root if the tree is empty.
         if (root == null) {
             root = ele;
@@ -93,11 +93,11 @@ public class BinaryTree {
         }
 
         // Do lateral traversal and insert at the first empty node.
-        Queue<Node> Q = new LinkedList<Node>();
+        Queue<BTNode> Q = new LinkedList<BTNode>();
         Q.add(root);
 
         while (!Q.isEmpty()) {
-            Node discover = Q.peek();
+            BTNode discover = Q.peek();
             Q.remove();
 
             // If left is empty, insert the node otherwise keep traversing.
@@ -119,11 +119,11 @@ public class BinaryTree {
     }
 
     void deleteDeepest(int element) {
-        Queue<Node> Q = new LinkedList<Node>();
+        Queue<BTNode> Q = new LinkedList<BTNode>();
         Q.add(root);
 
         // Traverse at level order.
-        Node dequeuedNode = null;
+        BTNode dequeuedNode = null;
         while (!Q.isEmpty()) {
             dequeuedNode = Q.peek();
             Q.remove();
@@ -165,10 +165,10 @@ public class BinaryTree {
 
         // Level order traversal to find the key node and 
         // deepest node (dequeued last from FIFO queue).
-        Queue<Node> Q = new LinkedList<Node>();
+        Queue<BTNode> Q = new LinkedList<BTNode>();
         Q.add(root);
         
-        Node keyNode = null, lastDequeuedNode = null;
+        BTNode keyNode = null, lastDequeuedNode = null;
 
         while (!Q.isEmpty()) {
             lastDequeuedNode = Q.peek();
@@ -213,11 +213,11 @@ public class BinaryTree {
          *    4 5
          */
         BinaryTree tree = new BinaryTree();
-        tree.root = new Node(1);
-        tree.root.left = new Node(2);
-        tree.root.right = new Node(3);
-        tree.root.left.left = new Node(4);
-        tree.root.left.right = new Node(5);
+        tree.root = new BTNode(1);
+        tree.root.left = new BTNode(2);
+        tree.root.right = new BTNode(3);
+        tree.root.left.left = new BTNode(4);
+        tree.root.left.right = new BTNode(5);
 
         System.out.print("Inorder \t: ");
         tree.inorder();
@@ -243,7 +243,7 @@ public class BinaryTree {
          *     2     3
          *    4 5   6
          */
-        Node ele = new Node(6);
+        BTNode ele = new BTNode(6);
         System.out.println("Inserting node...");
         tree.insert(ele);
 
@@ -264,6 +264,5 @@ public class BinaryTree {
         System.out.print("Level Order \t: ");
         tree.levelOrder();
         System.out.println("");
-
     }
 }
