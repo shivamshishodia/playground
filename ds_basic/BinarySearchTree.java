@@ -79,7 +79,9 @@ public class BinarySearchTree {
                 return root.left;
             }
             // Node has two children, find inorder successor and delete.
+            // Find inorder successor and assign the value to root.key.
             root.key = minValue(root.right);
+            // Delete the inorder successor which lies to the right.
             root.right = deleteNode(root.right, root.key);
         }
         return root;
