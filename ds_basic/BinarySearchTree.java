@@ -46,8 +46,48 @@ public class BinarySearchTree {
         inorder(root.right);
     }
 
+    // Keep traversing left to find the next successor.
+    int minValue(BSTNode root) {
+        int min = root.key;
+        while (root.left != null) {
+            min = root.left.key;
+            root = root.left;
+        }
+        return min;
+    }
+
+    BSTNode deleteNode(BSTNode root, int element) {
+        // Check if the tree is empty.
+        if (root == null) {
+            return root;
+        }
+        // Traverse subtress to find the node to be deleted.
+        if (element < root.key) {
+            // When the node is found, .left will be assinged null value.
+            root.left = deleteNode(root.left, element);
+        }
+        else if (element > root.key) {
+            // When the node is found, .right will be assinged null value.
+            root.right = deleteNode(root.right, element);
+        } 
+        // Node to be deleted is found.
+        else {
+            // Node has no child, or it has one child.
+            if (root.left == null) {
+                return root.right;
+            } else if (root.right == null) {
+                return root.left;
+            }
+            // Node has two children, find inorder successor and delete.
+            root.key = minValue(root.right);
+            root.right = deleteNode(root.right, root.key);
+        }
+        return root;
+    }
+
     // Wrappers
     void insert(int element) { root = insertNode(root, element); }
+    void delete(int element) { root = deleteNode(root, element); }
     void inorder() { inorder(root); }
     
     public static void main(String[] args) {
@@ -67,6 +107,23 @@ public class BinarySearchTree {
         tree.insert(60);
         tree.insert(80);
 
+        System.out.print("Inorder \t: ");
+        tree.inorder();
+        System.out.println("");
+        
+        System.out.println("Deleting nodes...");
+        
+        tree.delete(20);
+        System.out.print("Inorder \t: ");
+        tree.inorder();
+        System.out.println("");
+        
+        tree.delete(30);
+        System.out.print("Inorder \t: ");
+        tree.inorder();
+        System.out.println("");
+
+        tree.delete(50);
         System.out.print("Inorder \t: ");
         tree.inorder();
     }
