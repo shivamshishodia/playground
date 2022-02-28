@@ -53,6 +53,30 @@ public class SimpleGraph {
         }
     }
 
+    // Traverse the graph DFS helper.
+    void DFSUtil(int ele, boolean visited[]) {
+        // Mark the node as visited.
+        visited[ele] = true;
+        System.out.print(ele + " ");
+        // Keep adding associated nodes.
+        Iterator<Integer> itr = adj[ele].listIterator();
+        while (itr.hasNext()) {
+            int node = itr.next();
+            // Visit only unvisted nodes.
+            if (!visited[node]) {
+                DFSUtil(node, visited);
+            }
+        }
+    }
+
+    // Traverse the graph DFS.
+    void DFS(int ele) {
+        // Mark all nodes as not visited.
+        boolean visited[] = new boolean[V];
+        // Call the helper.
+        DFSUtil(ele, visited);
+    }
+
     public static void main(String[] args) {
         /**
          *   0 ------> 1
@@ -71,5 +95,10 @@ public class SimpleGraph {
 
         System.out.print("BFS : ");
         g.BFS(2);
+        System.out.println("");
+
+        System.out.print("DFS : ");
+        g.DFS(2);
+        System.out.println("");
     }
 }
