@@ -63,7 +63,7 @@ insert into account_job(user_id, job_id, hire_date) values (10, 10, current_time
 /* 
 	UPDATE can be used in two ways. One is a basic SET.
 	Other is Update Join (use another table to set values).
-	Ex: UPDATE tableA SET original_col = tableB.new_col FROM tableB WHERE tableA.id = tableB.id;4
+	Ex: UPDATE tableA SET original_col = tableB.new_col FROM tableB WHERE tableA.id = tableB.id;
 	We can also return affected rows. UPDATE account SET last_login = created_on RETURNING account_id, last_login
 */
 update account set last_login = current_timestamp; -- Value.
@@ -84,6 +84,9 @@ delete from job where job_name = 'Cowboy' returning job_id, job_name; -- Return 
 	3. Set DEFAULT.
 	4. Add CHECK constraints.
 	5. RENAME table.
+
+	COLUMN ops: alter table table_name alter column column_name // ops here //
+	TABLE ops: alter table table_name (add/rename/drop) column column_name
 */
 
 create table information(

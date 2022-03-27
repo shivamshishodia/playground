@@ -9,7 +9,7 @@ select * from actor;
 select first_name, last_name from actor;
 
 -- DISTINCT operates on a column. Use of parentheses is recommended.
--- A table column table may have duplicate values. DISTINCT helps to
+-- A table column may have duplicate values. DISTINCT helps to
 -- filter out unique values from the column.
 select * from film;
 select distinct(release_year) from film; -- Returns 2006.
